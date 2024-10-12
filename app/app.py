@@ -1,13 +1,21 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
-
-
 import sys
 from sqlalchemy import or_, and_
 import os
-
+import logging
+import traceback
 
 app = Flask(__name__)
+# Dockerを使用した開発 スライド19 ログ出力
+app.logger.setLevel(logging.DEBUG)
+log_handler = logging.FileHandler(os.getenv('LOG_FILE'))
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s - %(name)s - %(funcName)s - %(message)s')
+log_handler.setFormatter(formatter)
+log_handler.setLevel(logging.DEBUG)
+app.logger.addHandler(log_handler)
+log = app.logger
+
 # Dockerを使用した開発　スライド15 スライド16
 DEBUG = os.getenv('DEBUG', '0') == '1' # '1'ならTrue, それ以外はFalse
 if DEBUG:
@@ -70,17 +78,26 @@ def person_search():
     return render_template('./person_search.html')
 @app.route('/person_result')
 def person_result():
-    search_size = request.args.get("search_size")
-    persons = db.session.query(Person).filter(Person.size > search_size)
+    try:
+        search_size = request.args.get("search_size")
+        log.debug(f'search_size:{search_size}')
+        search_size = int(search_size)
+        persons = db.session.query(Person).filter(Person.size >= search_size)
+    except Exception:
+        log.error(traceback.format_exec())
     return render_template('./person_result.html', persons=persons, search_size=search_size)
 @app.route('/human-search')
 def human_search():
     return render_template('./human_search.html')
 @app.route('/human-result')
 def human_result():
-    search_height = request.args.get("search-height")
-    search_weight = request.args.get("search-weight")
-    humans = db.session.query(Human).filter(Human.height > search_height and Human.weight > search_weight)
+    try:
+        search_height = request.args.get("search-height")
+        search_weight = request.args.get("search-weight")
+        log.debug(f'search-height:{search_height}, search-weight:{search_weight}')
+        humans = db.session.query(Human).filter(Human.height > search_height and Human.weight > search_weight)
+    except Exception:
+        log.error(traceback.format_exec())
     return render_template('./human_result.html', humans = humans, search_height=search_height, search_weight=search_weight)
 
 # Pythonを使用してWebアプリの作成3 2024-9-28
