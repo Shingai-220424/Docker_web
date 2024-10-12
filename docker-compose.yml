@@ -6,6 +6,8 @@ services:
    context: .
   ports:
   - 5000:5000
+  env_file:
+  - ./.env.dev
   volumes:
   - ./app:/app
 
@@ -13,8 +15,8 @@ services:
   image: mysql
   ports:
   - 3306:3306
-  environment:
-  - MYSQL_ROOT_PASSWORD=p@ssw0rd1
+  env_file:
+  - ./.env.db
   volumes:
   - mysql:/var/lib/mysql
   - mysql_config:/etc/mysql

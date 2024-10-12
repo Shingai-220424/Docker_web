@@ -1,13 +1,26 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from mysql_model import Person
-from mysql_model import Human
+
+
 import sys
 from sqlalchemy import or_, and_
+import os
+
 
 app = Flask(__name__)
-# Pythonを使用しての開発_Webアプリ2のpowerpointスライド26
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:p%40ssw0rd1@mysqldb/test_mysql?charset=utf8mb4'
+# Dockerを使用した開発　スライド15 スライド16
+DEBUG = os.getenv('DEBUG', '0') == '1' # '1'ならTrue, それ以外はFalse
+if DEBUG:
+    # SQLiteの設定
+    from test_model import Person
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI_SQLite')
+
+else:
+    # MySQLの設定
+    from mysql_model import Person
+    from mysql_model import Human
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI_MySQL')
+app.config['PORT'] = os.getenv('PORT')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
