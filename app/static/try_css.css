@@ -1,0 +1,13 @@
+td {
+    color: cyan;
+}
+th{
+    color: magenta;
+}
+table {
+    width: 100%; /* テーブルを全幅にする */
+}
+
+th, td, form {
+    text-align: center; /* 中央揃え */
+}

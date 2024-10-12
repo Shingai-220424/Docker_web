@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>検索用htmlファイル</title>
+        <script src={{url_for("static", filename="select_js.js")}}></script>
+    </head>
+    <body>
+        <form action="http://127.0.0.1:5000/human-result">
+            検索対象：<br>
+            身長が<input type="text" value="" name="search_height"/>
+            <select name="moreLessHeight" id="moreLessHeight" onchange="moreLessHeight()">
+                <option value="more" >以上</option>
+                <option value="less" >以下</option>
+            </select>
+            <select name="selectAndOr" id="selectAndOr" onchange="selectAndOr()">
+                <option value="and" >AND</option>
+                <option value="or" >OR</option>
+            </select>
+            体重が<input type="text" value="" name="search_weight"><br>
+            <select name="moreLessWeight" id="moreLessWeight" onchange="moreLessWeight()">
+                <option value="more" >以上</option>
+                <option value="less" >以下</option>
+            </select>
+            <input type="submit" value="検索"/>
+        </form>
+    </body>
+</html>

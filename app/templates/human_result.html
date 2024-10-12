@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>検索結果表示用ファイル</title>
+    </head>
+    <body>
+            身長が{{search_height}}以上で体重が{{search_weight}}以上の人<br>
+            <table border="1">
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>height</th>
+                    <th>weight</th>
+                </tr>
+                {% for human in humans %}
+                <tr>
+                    <td>{{human.id}}</td>
+                    <td>{{human.name}}</td>
+                    <td>{{human.height}}</td>
+                    <td>{{human.weight}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+    </body>
+</html>

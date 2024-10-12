@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>検索結果表示用ファイル</title>
+    </head>
+    <body>
+            サイズが{{search_size}}以上の人<br>
+            <table border="1">
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>size</th>
+                </tr>
+                {% for person in persons %}
+                <tr>
+                    <td>{{person.id}}</td>
+                    <td>{{person.name}}</td>
+                    <td>{{person.size}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+    </body>
+</html>

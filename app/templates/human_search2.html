@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DB演習用htmlファイル</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='exercise_css.css')}}">
+        <script src={{ url_for("static", filename="exercise_js.js") }}></script>
+        <script src={{ url_for("static", filename="plotly-2.12.1.min.js") }}></script>
+    </head>
+    <body>
+        <form action="http://127.0.0.1:5000/human_result2" onsubmit="return check_input();">
+            検索対象：<br>
+            身長が<input type="text" value="" name="search_height" id="height_id"/>
+            <select name="height_cond">
+                <option value="1">以上</option>
+                <option value="2">以下</option>
+            </select>
+            <br>
+            <input type="radio" name="and_or" value="1" checked="checked">かつ
+            <input type="radio" name="and_or" value="2">または
+            <br>                
+            体重が<input type="text" value="" name="search_weight" id="weight_id"/>
+            <select name="weight_cond">
+                <option value="1">以上</option>
+                <option value="2">以下</option>
+            </select>
+            <br>
+            <input type="submit" value="検索"/>
+        </form>
+    </body>
+</html>

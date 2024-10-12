@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DB演習用結果表示用ファイル</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='exercise_css.css')}}">
+        <script src={{ url_for("static", filename="plotly-2.32.0.min2.js") }}></script>
+    </head>
+    <body>
+        <div id="try_graph" style="width:600px;height:250px;margin: auto;"></div>
+        <script>
+            var trace = {
+                x: [{{x_list}}],
+                y: [{{y_list}}],
+                mode: 'markers',
+                type: 'scatter',
+                name: 'human',
+                {% autoescape false %}
+                text: [{{name_list}}],
+                {% endautoescape %}
+                marker: { size: 10 }
+            };
+            var data = [trace];
+            var layout = {
+                title:'身長と体重の散布図'
+            };
+            Plotly.newPlot('try_graph', data, layout);
+        </script>
+
+            身長が{{search_height}}
+            {% if height_cond == 1%}
+                以上
+            {% else %}
+            以下
+            {% endif %}
+            の人<br>
+            {% if and_or == 1%}
+                かつ
+            {% else %}
+                または
+            {% endif %}<br>
+            体重が{{search_weight}}
+            {% if weight_cond == 1%}
+                以上
+            {% else %}
+            以下
+            {% endif %}
+            の人<br>            
+            <table border="1">
+                <tr>
+                    <th>id</th>
+                    <th>名前</th>
+                    <th>身長</th>
+                    <th>体重</th>
+                </tr>
+                {% for human in humans %}
+                <tr>
+                    <td>{{human.id}}</td>
+                    <td>{{human.name}}</td>
+                    <td>{{human.height}}cm</td>
+                    <td>{{human.weight}}Kg</td>
+                </tr>
+                {% endfor %}
+            </table>
+    </body>
+</html>

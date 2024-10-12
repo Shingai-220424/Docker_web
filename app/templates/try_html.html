@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='try_css.css')}}">
+    <script src={{url_for("static", filename="try_js.js")}}></script>
+    <script src={{url_for("static", filename="plotly-2.32.0.min.js")}}></script>
+</head>
+<body>
+    <div id="try_graph" style="width:600px;height:250px;margin: auto;"></div>
+        <script>
+            var trace = {
+                x: [1, 2, 3, 4],
+                y: [10, 15, 13, 17],
+                mode: 'lines+markers',
+                type: 'scatter',
+                text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
+            };
+            var data = [trace];
+            Plotly.newPlot('try_graph', data);
+        </script>
+
+    <form method="post" action="http://127.0.0.1:5000/show_data">
+        <table id="table_id">
+            <tr>
+                <th>見出し1</th>
+                <th>見出し2</th>
+                <th>見出し3</th>
+            </tr>
+            <tr>
+                <th>内容1</th>
+                <th>内容2</th>
+                <th>内容3</th>
+            </tr>
+        </table>
+        <input type="text" name="text" value="テスト">
+        <input type="submit" name="submit" value="送信">
+        <select name="colorSelecter" id="colorSelecter" onchange="colorSelect()">
+            <option value="red" >赤</option>
+            <option value="blue" >青</option>
+            <option value="yellow">黄色</option>
+        </select>
+        <input type="button" name="button" value="ボタン" onclick="change_table()">
+    </form>
+
+</body>
+</html>
